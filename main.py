@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Query
 from pydantic import BaseModel, Field, ConfigDict
 
 
@@ -32,12 +32,14 @@ def read_root():
 
 
 @app.get('/expenses', response_model=list[ExpenseResponse])
-def get_expenses(limit: int | None = None, min_amount: float | None = None):
+def get_expenses(
+    limit: int | None = Query(default=None, ge=1), 
+    min_amount: float | None = Query(default=None, ge=0)):
 
     result = expenses_list
 
     if min_amount is not None:
-        result = [expense for expense in expenses_list if expense["amount"] >= min_amount]    
+        result = [expense for expense in result if expense["amount"] >= min_amount]    
 
     if limit is not None:
         result = result[:limit]
@@ -50,7 +52,7 @@ def get_expense(expense_id: int):
 
     for expense in expenses_list:
         if expense["id"] == expense_id:
-            
+
             return expense
 
     raise HTTPException(status_code=404, detail="Expense not found")
