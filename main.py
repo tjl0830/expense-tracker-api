@@ -34,13 +34,19 @@ def read_root():
 @app.get('/expenses', response_model=list[ExpenseResponse])
 def get_expenses(
     limit: int | None = Query(default=None, ge=1), 
-    min_amount: float | None = Query(default=None, ge=0)):
+    min_amount: float | None = Query(default=None, ge=0),
+    sort: str | None = Query(default=None)):
 
     result = expenses_list
 
     if min_amount is not None:
         result = [expense for expense in result if expense["amount"] >= min_amount]    
-
+    
+    if sort == 'amount':
+        result.sort(key=lambda x: x['amount'])
+    elif sort == '-amount':
+        result.sort(key=lambda x: x['amount'], reverse=True)
+    
     if limit is not None:
         result = result[:limit]
 
