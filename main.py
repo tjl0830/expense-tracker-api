@@ -17,10 +17,35 @@ class ExpenseResponse(BaseModel):
 
 
 app = FastAPI()
+# expenses_list = [
+#     {"id": 1, "description": "Lunch", "amount": 150},
+#     {"id": 7, "description": "Dinner", "amount": 200},
+#     {"id": 3, "description": "Taxi", "amount": 100}
+# ]
 expenses_list = [
     {"id": 1, "description": "Lunch", "amount": 150},
     {"id": 7, "description": "Dinner", "amount": 200},
-    {"id": 3, "description": "Taxi", "amount": 100}
+    {"id": 3, "description": "Taxi", "amount": 100},
+    {"id": 8, "description": "Coffee", "amount": 85},
+    {"id": 9, "description": "Groceries", "amount": 1250},
+    {"id": 10, "description": "Bus Fare", "amount": 35},
+    {"id": 11, "description": "Electricity Bill", "amount": 1850},
+    {"id": 12, "description": "Internet Bill", "amount": 1299},
+    {"id": 13, "description": "Snacks", "amount": 65},
+    {"id": 14, "description": "Movie Ticket", "amount": 280},
+    {"id": 15, "description": "Mobile Load", "amount": 100},
+    {"id": 16, "description": "Laundry", "amount": 180},
+    {"id": 17, "description": "Fast Food", "amount": 175},
+    {"id": 18, "description": "Medicine", "amount": 320},
+    {"id": 19, "description": "Water Bill", "amount": 450},
+    {"id": 20, "description": "Jeepney Fare", "amount": 24},
+    {"id": 21, "description": "Keyboard", "amount": 2499},
+    {"id": 22, "description": "Notebook", "amount": 55},
+    {"id": 23, "description": "Headphones", "amount": 1599},
+    {"id": 24, "description": "Pizza", "amount": 399},
+    {"id": 25, "description": "Phone Case", "amount": 199},
+    {"id": 26, "description": "Water", "amount": 25},
+    {"id": 27, "description": "Online Subscription", "amount": 299}
 ]
 
 
