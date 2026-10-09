@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi import HTTPException, status, Query
 from pydantic import BaseModel, Field, ConfigDict
+from typing import Literal
 
 
 class ExpenseCreate(BaseModel):
@@ -35,7 +36,7 @@ def read_root():
 def get_expenses(
     limit: int | None = Query(default=None, ge=1), 
     min_amount: float | None = Query(default=None, ge=0),
-    sort: str | None = Query(default=None)):
+    sort: Literal["amount", "-amount"] | None = Query(default=None)):
 
     result = expenses_list.copy()
 
