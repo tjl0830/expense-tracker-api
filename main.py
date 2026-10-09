@@ -37,7 +37,7 @@ def get_expenses(
     min_amount: float | None = Query(default=None, ge=0),
     sort: str | None = Query(default=None)):
 
-    result = expenses_list
+    result = expenses_list.copy()
 
     if min_amount is not None:
         result = [expense for expense in result if expense["amount"] >= min_amount]    
