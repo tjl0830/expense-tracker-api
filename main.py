@@ -61,7 +61,9 @@ def read_root():
 def get_expenses(
     limit: int | None = Query(default=None, ge=1), 
     min_amount: float | None = Query(default=None, ge=0),
-    sort: Literal["amount", "-amount"] | None = Query(default=None)):
+    sort: Literal["amount", "-amount"] | None = Query(default=None),
+    skip: int = Query(default=0, ge=0)
+    ):
 
     result = expenses_list.copy()
 
@@ -72,7 +74,9 @@ def get_expenses(
         result.sort(key=lambda x: x['amount'])
     elif sort == '-amount':
         result.sort(key=lambda x: x['amount'], reverse=True)
-    
+
+    result = result[skip:]
+
     if limit is not None:
         result = result[:limit]
 
