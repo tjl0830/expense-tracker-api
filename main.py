@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi import HTTPException, status, Query
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 from typing import Literal
 
 
@@ -15,6 +15,18 @@ class ExpenseResponse(BaseModel):
     description: str
     amount: float
 
+class ExpensePatch(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
+
+    description: str | None = Field(default=None, min_length=1)
+    amount: float | None = Field(default=None, gt=0)
+
+    @field_validator('description', 'amount')
+    @classmethod
+    def is_null(cls, value):
+        if value is None:
+            raise ValueError("Field cannot be null")
+        return value  
 
 app = FastAPI()
 # expenses_list = [
@@ -130,4 +142,20 @@ def update_expense(expense_id: int, expense: ExpenseCreate):
 
             return item
 
-    raise HTTPException(status_code=404, detail="Expense not found")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Expense not found")    
+
+@app.patch("/expenses/{expense_id}", response_model=ExpenseResponse)
+def patch_expense(expense_id: int, expense: ExpensePatch):
+    
+    set_expenses = expense.model_dump(exclude_unset=True)
+
+    if not set_expenses:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail="At least one field must be provided for an update")  
+    for item in expenses_list:
+        if item["id"] == expense_id:
+            for argument in set_expenses:
+                item[argument] = set_expenses[argument]
+
+            return item
+
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Expense not found")   
