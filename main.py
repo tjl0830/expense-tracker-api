@@ -103,7 +103,7 @@ def get_expense(expense_id: int):
 
             return expense
 
-    raise HTTPException(status_code=404, detail="Expense not found")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Expense not found")
 
     
 @app.post('/expenses', status_code=status.HTTP_201_CREATED, response_model=ExpenseResponse)
@@ -130,7 +130,7 @@ def delete_expense(expense_id: int):
 
             return deleted_expense
 
-    raise HTTPException(status_code=404, detail="Expense not found")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Expense not found")
 
 @app.put("/expenses/{expense_id}", response_model=ExpenseResponse)
 def update_expense(expense_id: int, expense: ExpenseCreate):
