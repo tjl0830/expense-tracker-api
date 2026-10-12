@@ -29,11 +29,7 @@ class ExpensePatch(BaseModel):
         return value  
 
 app = FastAPI()
-# expenses_list = [
-#     {"id": 1, "description": "Lunch", "amount": 150},
-#     {"id": 7, "description": "Dinner", "amount": 200},
-#     {"id": 3, "description": "Taxi", "amount": 100}
-# ]
+
 expenses_list = [
     {"id": 1, "description": "Lunch", "amount": 150},
     {"id": 7, "description": "Dinner", "amount": 200},
